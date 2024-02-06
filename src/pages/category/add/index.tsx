@@ -1,26 +1,27 @@
-import * as React from 'react';
+import React, {useState} from 'react'
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import { HexColorPicker } from "react-colorful";
 export default function Add() {
-  const [title, setTitle] = React.useState('');
-  const [date, setDate] = React.useState('');
-  const [textColor, setTextColor] = React.useState('');
-  const [image, setImage] = React.useState(null);
+  const [textColor, setColor] = useState("#aabbcc");
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState<any>();
+  const [image, setImage] = useState('');
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: any) => {
     const file = e.target.files[0];
     setImage(file);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Form verilerini bir API'ye gönderme işlemleri burada gerçekleştirilebilir
     console.log('Başlık:', title);
     console.log('Tarih:', date);
     console.log('Yazı Rengi:', textColor);
     console.log('Resim:', image);
+
   };
 
   return (
@@ -32,19 +33,8 @@ export default function Add() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <TextField
-          label="Tarih"
-          type="date"
-          variant="outlined"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <TextField
-          label="Yazı Rengi"
-          variant="outlined"
-          value={textColor}
-          onChange={(e) => setTextColor(e.target.value)}
-        />
+
+        <HexColorPicker color={textColor} onChange={setColor} />
         <input type="file" accept="image/*" onChange={handleImageChange} />
         <Button variant="contained" type="submit">
           Gönder
