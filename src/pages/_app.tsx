@@ -28,6 +28,7 @@ import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
 // ** Global css styles
+import 'bootstrap/dist/css/bootstrap.css'
 import '../../styles/globals.css'
 
 // ** Extend App Props with Emotion
