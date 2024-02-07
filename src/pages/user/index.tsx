@@ -17,9 +17,8 @@ function createData(
   calories: number,
   fat: number,
   carbs: number,
-  protein: number,
 ) {
-  return { name, calories, fat, carbs, protein };
+  return { name, calories, fat, carbs,  };
 }
 
 const rows = [
@@ -30,11 +29,11 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function User() {
+export default function Category() {
   const router = useRouter(); // Next.js'in router'ını al
 
   const handleButtonClick = () => {
-    router.push('user/add'); // '/add' rotasına yönlendir
+    router.push('category/add'); // '/add' rotasına yönlendir
   };
 
   return (
@@ -43,13 +42,12 @@ export default function User() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
-              <TableCell align="right">İşlemler&nbsp;(g)</TableCell>
-              <TableCell align="right">Kaldır&nbsp;(g)</TableCell>
+              <TableCell>Fotoğraf</TableCell>
+              <TableCell align="right">Ad Soyad</TableCell>
+              <TableCell align="right">Tarih</TableCell>
+              <TableCell align="right">Color</TableCell>
+              <TableCell align="right">Düzenle</TableCell>
+              <TableCell align="right">Kaldır</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -64,7 +62,6 @@ export default function User() {
                 <TableCell align="right">{row.calories}</TableCell>
                 <TableCell align="right">{row.fat}</TableCell>
                 <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
                 <TableCell align="right">
                   <EditIcon />
                 </TableCell>
@@ -77,6 +74,7 @@ export default function User() {
         </Table>
       </TableContainer>
       <Stack spacing={2} direction="row">
+        {/* Butona tıklandığında handleButtonClick fonksiyonunu çağır */}
         <Button variant="contained" onClick={handleButtonClick}>
           Contained
         </Button>
