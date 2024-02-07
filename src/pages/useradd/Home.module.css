@@ -1,0 +1,71 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.main {
+  text-align: left;
+  padding: 5rem 0;
+}
+
+.dropzone {
+  border: 2px dashed #8a8a8a;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.imageContainer {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.titleInsideImage,
+.dateInsideImage,
+.textInsideImage1,
+.textInsideImage2,
+.textInsideImage3 {
+  position: absolute;
+  color: rgb(255, 255, 255);
+  font-size: larger;
+}
+
+.titleInsideImage {
+  left: 4%;
+  bottom: 1.5%;
+}
+
+.dateInsideImage {
+  right: 4%;
+  bottom: 1.5%;
+}
+
+.textInsideImage1 {
+  left: 10px;
+  top: 10px;
+}
+
+.textInsideImage2 {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10px;
+}
+
+.textInsideImage3 {
+  right: 15px;
+  top: 10px;
+}
+
+.inputContainer input {
+  width: 29%;
+  padding: 10px;
+  margin: 6px; /* Inputlar arasında boşluk bırakmak için */
+}

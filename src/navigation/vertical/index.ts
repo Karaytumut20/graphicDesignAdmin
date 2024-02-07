@@ -25,6 +25,12 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/category'
     },
+        {
+      title: 'Kullanıcı ekle',
+      icon: AccountCogOutline,
+      path: '/useradd'
+    },
+
     {
       title: 'Account Settings',
       icon: AccountCogOutline,
