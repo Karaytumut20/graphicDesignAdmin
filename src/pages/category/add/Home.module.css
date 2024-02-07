@@ -24,8 +24,9 @@
 }
 
 .image {
-  width: 100%;
+  width: 45%;
   height: auto;
+  align-items: center;
 }
 
 .titleInsideImage,

@@ -8,42 +8,47 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Dropzone from 'react-dropzone'; // Import Dropzone component
+// @ts-ignore
 import styles from './Home.module.css'; // Assuming you have a CSS file for styles
 
 export default function Add() {
   const [textColor, setColor] = useState("#aabbcc");
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState(null); // Initialize date state
-  const [image, setImage] = useState(null); // Initialize image state
+  const [date, setDate] = useState<any>(); // Initialize date state
+  const [image, setImage] = useState(); // Initialize image state
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
   const [text3, setText3] = useState('');
 
-  const handleDateChange = (newDate) => {
+  const handleDateChange = (newDate: any) => {
     setDate(newDate);
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e:any) => {
     const file = e.target.files[0];
     setImage(file);
   };
 
-  const handleDrop = (acceptedFiles) => {
+  const handleDrop = (acceptedFiles: any) => {
+    console.log(acceptedFiles)
     const file = acceptedFiles[0];
 
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
+        // @ts-ignore
         setImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log('Başlık:', title);
-    console.log('Tarih:', date ? date.format('YYYY-MM-DD') : null); // Format date if it's not null
+
+    console.log('Tarih:', date ? date.format('YYYY-MM-DD') : null);
+
     console.log('Yazı Rengi:', textColor);
     console.log('Resim:', image);
     console.log('Text 1:', text1);
@@ -69,7 +74,7 @@ export default function Add() {
             onChange={(newDate) => handleDateChange(newDate)}
           />
         </LocalizationProvider>
-        
+
         <HexColorPicker color={textColor} onChange={setColor} />
 
         <Dropzone onDrop={handleDrop}>
@@ -82,7 +87,7 @@ export default function Add() {
             </section>
           )}
         </Dropzone>
-        
+
         {image && (
           <div className={styles.imageContainer}>
             <img src={image} alt="Dropped Image" className={styles.image} />
@@ -93,7 +98,7 @@ export default function Add() {
             )}
             {date && (
               <div className={styles.dateInsideImage}>
-                <p>{date.format('YYYY-MM-DD')}</p>
+                <p>{date?.format('YYYY-MM-DD')}</p>
               </div>
             )}
             {text1 && (
