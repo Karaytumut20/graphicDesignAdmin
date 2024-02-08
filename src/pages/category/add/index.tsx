@@ -75,7 +75,6 @@ export default function Add() {
           />
         </LocalizationProvider>
 
-        <HexColorPicker color={textColor} onChange={setColor} />
 
         <Dropzone onDrop={handleDrop}>
           {({ getRootProps, getInputProps }) => (
@@ -87,6 +86,7 @@ export default function Add() {
             </section>
           )}
         </Dropzone>
+        <HexColorPicker color={textColor} onChange={setColor} />
 
         {image && (
           <div className={styles.imageContainer}>
