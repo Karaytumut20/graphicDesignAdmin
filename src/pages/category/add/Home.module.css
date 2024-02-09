@@ -24,7 +24,7 @@
 }
 
 .image {
-  width: 45%;
+  width: 38%;
   height: auto;
   align-items: center;
 }
@@ -69,4 +69,14 @@
   width: 29%;
   padding: 10px;
   margin: 6px; /* Inputlar arasında boşluk bırakmak için */
+}
+
+.textField {
+  margin-top: 6px; /* Inputlar arasında boşluk bırakmak için */
+}
+.box {
+  border: #8a8a8a;
+}
+.full-width {
+  width: 100%;
 }

@@ -97,7 +97,7 @@ export default function Category() {
                 <TableCell align="right">{row.calories}</TableCell>
                 <TableCell align="right">{row.fat}</TableCell>
                 <TableCell align="right">
-                  <Badge badgeContent={4} color={row.color}><MailIcon color="action" /></Badge>
+                <Badge badgeContent={''} color={row.color}></Badge>
                 </TableCell>
                 <TableCell align="right">
                   <EditIcon onClick={() => console.log('Edit clicked')} style={{ cursor: 'pointer' }} />
