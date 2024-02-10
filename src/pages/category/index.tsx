@@ -15,23 +15,22 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
+import EditItemPage from '../edit/[id]';
 
-function createData(
+const createData = (
   name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  color: string // Renk bilgisini içeren bir prop
-) {
-  return { name, calories, fat, carbs, color };
+  color: string, // Renk bilgisini içeren bir prop
+  id: number // Öğe id'si
+) => {
+  return { name, color, id };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 'secondary'),
-  createData('Ice cream sandwich', 237, 9.0, 37, 'success'),
-  createData('Eclair', 262, 16.0, 24, 'info'),
-  createData('Cupcake', 305, 3.7, 67, 'warning'),
-  createData('Gingerbread', 356, 16.0, 49, 'error'),
+const items = [
+  { id: 1, name: 'Frozen yoghurt', color: 'secondary' },
+  { id: 2, name: 'Ice cream sandwich', color: 'success' },
+  { id: 3, name: 'Eclair', color: 'info' },
+  { id: 4, name: 'Cupcake', color: 'warning' },
+  { id: 5, name: 'Gingerbread', color: 'error' }
 ];
 
 const modalStyle = {
@@ -60,14 +59,18 @@ export default function Category() {
     setModalOpen(false);
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (id: number) => {
     // Silme işlevi burada gerçekleştirilebilir
-    console.log('Delete clicked');
+    console.log('Delete clicked for id:', id);
     handleModalOpen(); // Modalı aç
   };
 
+  const handleEditClick = (id: number) => {
+    router.push(`/edit/${id}`); // '/edit/[id]' rotasına yönlendir
+  };
+
   const handleButtonClick = () => {
-    router.push('category/add'); // '/add' rotasına yönlendir
+    router.push('/category/add'); // '/add' rotasına yönlendir
   };
 
   return (
@@ -86,24 +89,24 @@ export default function Category() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {items.map((item) => (
               <TableRow
-                key={row.name}
+                key={item.id} // ID kullanıldı
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {item.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{/* Burada diğer özellikler eklenebilir, ancak bu veriler items dizisinde mevcut değil */}</TableCell>
+                <TableCell align="right">{/* Burada diğer özellikler eklenebilir, ancak bu veriler items dizisinde mevcut değil */}</TableCell>
                 <TableCell align="right">
-                <Badge badgeContent={''} color={row.color}></Badge>
-                </TableCell>
-                <TableCell align="right">
-                  <EditIcon onClick={() => console.log('Edit clicked')} style={{ cursor: 'pointer' }} />
+                  <Badge badgeContent={''} color={item.color}></Badge>
                 </TableCell>
                 <TableCell align="right">
-                  <DeleteIcon onClick={handleDeleteClick} style={{ cursor: 'pointer' }} />
+                  <EditIcon onClick={() => handleEditClick(item.id)} style={{ cursor: 'pointer' }} /> {/* Düzenleme için handleEditClick fonksiyonu çağrıldı */}
+                </TableCell>
+                <TableCell align="right">
+                  <DeleteIcon onClick={() => handleDeleteClick(item.id)} style={{ cursor: 'pointer' }} /> {/* Silme için handleDeleteClick fonksiyonu çağrıldı */}
                 </TableCell>
               </TableRow>
             ))}
