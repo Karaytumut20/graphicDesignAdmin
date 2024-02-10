@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useRouter } from 'next/router'; // Next.js'in router'ını içe aktarın
+import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router'; // Next.js'in router'ını içe aktarın
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,9 +14,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import EditItemPage from '../edit/[id]';
+import CustomBadge from "../../@core/components/CustomBadge";
+import axios from 'axios';
 
 const createData = (
   name: string,
@@ -49,12 +49,23 @@ const modalStyle = {
 
 export default function Category() {
   const router = useRouter(); // Next.js'in router'ını al
-  const [modalOpen, setModalOpen] = React.useState(false);
-  
+  const [modalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState([]);
+
   const handleModalOpen = () => {
     setModalOpen(true);
   };
-  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: any = await axios.get('http://localhost:3000/api/category');
+      setData(response.data)
+    }
+
+    fetchData();
+  }, []);
+
+
   const handleModalClose = () => {
     setModalOpen(false);
   };
@@ -66,22 +77,33 @@ export default function Category() {
   };
 
   const handleEditClick = (id: number) => {
-    router.push(`/edit/${id}`); // '/edit/[id]' rotasına yönlendir
+    router.push(`category/edit/${id}`); // '/edit/[id]' rotasına yönlendir
   };
 
   const handleButtonClick = () => {
     router.push('/category/add'); // '/add' rotasına yönlendir
   };
+  const getDate = (date: any) => {
+
+    const dateObject = new Date(date); // Tarih dizesini bir tarih nesnesine dönüştürme
+
+    const year = dateObject.getFullYear(); // Yılı al
+    const month = dateObject.getMonth() + 1; // Ayı al (0-11 arasında olduğu için 1 eklenir)
+    const day = dateObject.getDate(); // Günü al
+
+    return `${year}/${month}/${day}`
+  }
 
   return (
     <div>
-      <h1>Kullanıcı Yönetimi</h1>
+        <h1>Kategori Yönetimi</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+                <TableCell>Başlık</TableCell>
               <TableCell>Fotoğraf</TableCell>
-              <TableCell align="right">Ad Soyad</TableCell>
+              <TableCell align="right">Logo</TableCell>
               <TableCell align="right">Tarih</TableCell>
               <TableCell align="right">Renk</TableCell>
               <TableCell align="right">Düzenle</TableCell>
@@ -89,19 +111,24 @@ export default function Category() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item) => (
+            {data.map((item: any) => (
               <TableRow
                 key={item.id} // ID kullanıldı
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {item.name}
+                  {item.title}
                 </TableCell>
-                <TableCell align="right">{/* Burada diğer özellikler eklenebilir, ancak bu veriler items dizisinde mevcut değil */}</TableCell>
-                <TableCell align="right">{/* Burada diğer özellikler eklenebilir, ancak bu veriler items dizisinde mevcut değil */}</TableCell>
                 <TableCell align="right">
-                  <Badge badgeContent={''} color={item.color}></Badge>
+                  <img src={item.image} alt='' width="100" />
                 </TableCell>
+                <TableCell align="right">{/* Burada diğer özellikler eklenebilir, ancak bu veriler items dizisinde mevcut değil */}</TableCell>
+                <TableCell align="right">{getDate(item.date)}</TableCell>
+                <TableCell align="right">
+                  <CustomBadge  color={item.color}></CustomBadge>
+                </TableCell>
+
+
                 <TableCell align="right">
                   <EditIcon onClick={() => handleEditClick(item.id)} style={{ cursor: 'pointer' }} /> {/* Düzenleme için handleEditClick fonksiyonu çağrıldı */}
                 </TableCell>
