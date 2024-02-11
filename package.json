@@ -58,6 +58,7 @@
     "bootstrap": "^5.3.2",
     "clsx": "^1.1.1",
     "dayjs": "^1.11.10",
+    "formidable": "^3.5.1",
     "mdi-material-ui": "^7.1.0",
     "mysql2": "^3.9.1",
     "next": "12.0.4",
@@ -72,6 +73,7 @@
     "react-popper": "^2.2.5"
   },
   "devDependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/node": "16.11.11",
     "@types/nprogress": "^0.2.0",
     "@types/react": "17.0.37",
