@@ -29,6 +29,11 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Kullanıcı Yönetimi',
       icon: AccountCogOutline,
       path: '/user'
+    },
+    {
+      title: 'Upload Image',
+      icon: AccountCogOutline,
+      path: '/upload-image'
     }
   ]
 }
