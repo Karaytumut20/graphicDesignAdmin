@@ -39,15 +39,16 @@ export default function uploadFormFiles(
 
     // Dosyanın yeni adı, kaydedileceği dizin ile birleştirilerek belirlenir
 
-    const newFilePath = `/images/afis/${newFilename}`;
+    const newFilePath = `public/images/afis/${newFilename}`;
 
     try {
 
       // Dosya taşınırken yeniden adlandırılıyor ve taşınıyor
-      fs.renameSync(filepath, newFilePath);
+      fs.renameSync(filepath, newFilePath)
+      const filePathNew = newFilePath.toString().replace("public", "");
 
       const db = await connectToDatabase();
-      const [result]: any = await db.query('UPDATE category SET image = ? WHERE id = ?', [newFilePath.toString(), id]);
+      const [result]: any = await db.query('UPDATE category SET image = ? WHERE id = ?', [filePathNew.toString(), id]);
 
       res.status(200).send("File uploaded and category updated successfully");
     } catch (error) {

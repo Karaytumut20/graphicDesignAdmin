@@ -14,18 +14,15 @@ import {styled} from '@mui/material/styles';
 import axios from "axios";
 import fs from "fs/promises";
 import path from "path";
-import Link from "next/link";
+
 
 interface Props {
   dirs: string[];
 }
 // @ts-ignore
-import styles from './Home.module.css';
-// @ts-ignore
 import {GetServerSideProps, NextPage} from "next";
 import {useRouter} from "next/router";
-import { Box } from 'mdi-material-ui';
-import {SnackbarOrigin} from "@mui/material";
+
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -82,14 +79,14 @@ const Add: NextPage<Props> = ({ dirs }) => {
         })
           .then(response => {
             // Handle response
-            console.log("Upload successful:", response);
+            push('/category');
           })
           .catch(error => {
             // Handle error
             console.error("Upload failed:", error);
           });
 
-          push('/category');
+
 
       }
 
