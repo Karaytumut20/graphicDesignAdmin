@@ -34,7 +34,9 @@ const navigation = (): VerticalNavItemsType => {
       title: 'Upload Image',
       icon: AccountCogOutline,
       path: '/upload-image'
-    }
+    },
+    
+    
   ]
 }
 

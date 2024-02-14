@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-
+//UMUTTTTTTTTTTTTTTT
 function createData(
   name: string,
   calories: number,
@@ -64,7 +64,7 @@ export default function Category() {
   };
 
   const handleButtonClick = () => {
-    router.push('category/add'); // '/add' rotasına yönlendir
+    router.push('user/add'); // '/add' rotasına yönlendir
   };
 
   return (
