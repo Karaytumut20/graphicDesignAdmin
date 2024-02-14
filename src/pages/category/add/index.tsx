@@ -7,7 +7,9 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import Dropzone from 'react-dropzone';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// @ts-ignore
+import { Snackbar } from '@mui/joy';
+
 import {styled} from '@mui/material/styles';
 import axios from "axios";
 import fs from "fs/promises";
@@ -21,6 +23,9 @@ interface Props {
 import styles from './Home.module.css';
 // @ts-ignore
 import {GetServerSideProps, NextPage} from "next";
+import {useRouter} from "next/router";
+import { Box } from 'mdi-material-ui';
+import {SnackbarOrigin} from "@mui/material";
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -38,11 +43,9 @@ const Add: NextPage<Props> = ({ dirs }) => {
   const [textColor, setTextColor] = useState("#aabbcc");
   const [title, setTitle] = useState('');
   const [date, setDate] = useState<any>();
-  const [image, setImage] = useState<any>();
-  const [selectedImage, setSelectedImage] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File>();
   const [file, setFile] = useState<any>();
 
+  const {push} = useRouter();
   function handleFileChange(event:any) {
     setFile(event.target.files);
   }
@@ -85,6 +88,9 @@ const Add: NextPage<Props> = ({ dirs }) => {
             // Handle error
             console.error("Upload failed:", error);
           });
+
+          push('/category');
+
       }
 
     } catch (error) {

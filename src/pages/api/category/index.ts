@@ -20,17 +20,7 @@ const handler: NextApiHandler = async (req: any, res: any) => {
       const insertedCategoryId = result.insertId; // Burada eklenen kategorinin ID'sini alıyoruz
 
       res.status(200).json({ id: insertedCategoryId }); // Frontend'e eklenen kategorinin ID'sini JSON olarak gönderiyoruz
-  } else if (req.method === 'PUT') {
-      const db = await connectToDatabase();
-      const {id, title, logo, image, font_color, date} = req.body;
-      const [categories] = await db.query('UPDATE category SET title=?, logo=?, image=?, font_color=?, date=? WHERE id=?', [title, logo, image, font_color, date, id]);
-      res.status(200).json(categories);
-    } else if (req.method === 'DELETE') {
-      const db = await connectToDatabase();
-      const {id} = req.body;
-      const [categories] = await db.query('DELETE FROM category WHERE id=?', [id]);
-      res.status(200).json(categories);
-    } else {
+  } else {
       res.status(405).json({error: "Method Not Allowed"});
     }
   } catch (error) {

@@ -39,7 +39,7 @@ export default function uploadFormFiles(
 
     // Dosyanın yeni adı, kaydedileceği dizin ile birleştirilerek belirlenir
 
-    const newFilePath = `public/images/afis/${newFilename}`;
+    const newFilePath = `/images/afis/${newFilename}`;
 
     try {
 

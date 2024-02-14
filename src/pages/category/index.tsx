@@ -14,24 +14,17 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import CustomBadge from "../../@core/components/CustomBadge";
 import axios from 'axios';
+
 
 const createData = (
   name: string,
   color: string, // Renk bilgisini içeren bir prop
   id: number // Öğe id'si
 ) => {
-  return { name, color, id };
+  return {name, color, id};
 }
 
-const items = [
-  { id: 1, name: 'Frozen yoghurt', color: 'secondary' },
-  { id: 2, name: 'Ice cream sandwich', color: 'success' },
-  { id: 3, name: 'Eclair', color: 'info' },
-  { id: 4, name: 'Cupcake', color: 'warning' },
-  { id: 5, name: 'Gingerbread', color: 'error' }
-];
 
 const modalStyle = {
   position: 'absolute' as 'absolute',
@@ -51,6 +44,7 @@ export default function Category() {
   const router = useRouter(); // Next.js'in router'ını al
   const [modalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -60,6 +54,7 @@ export default function Category() {
     const fetchData = async () => {
       const response: any = await axios.get('http://localhost:3000/api/category');
       setData(response.data)
+      console.log(response.data)
     }
 
     fetchData();
@@ -70,9 +65,25 @@ export default function Category() {
     setModalOpen(false);
   };
 
+  const confirmDelete = async () => {
+    try {
+      const response: any = await axios.delete(`http://localhost:3000/api/category/${selectedRowId}`);
+      console.log(response)
+      if(response.status === 200){
+        setModalOpen(false);
+        const newData = data.filter((item: any) => item.id !== selectedRowId);
+        setData(newData);
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleDeleteClick = (id: number) => {
     // Silme işlevi burada gerçekleştirilebilir
     console.log('Delete clicked for id:', id);
+    setSelectedRowId(id); // Seçili satırın kimliğini ayarla
     handleModalOpen(); // Modalı aç
   };
 
@@ -96,44 +107,50 @@ export default function Category() {
 
   return (
     <div>
-        <h1>Kategori Yönetimi</h1>
+      <h1>Kategori Yönetimi</h1>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{minWidth: 650}} aria-label="simple table">
           <TableHead>
             <TableRow>
-                <TableCell>Başlık</TableCell>
-              <TableCell>Fotoğraf</TableCell>
-              <TableCell align="right">Logo</TableCell>
-              <TableCell align="right">Tarih</TableCell>
-              <TableCell align="right">Renk</TableCell>
-              <TableCell align="right">Düzenle</TableCell>
-              <TableCell align="right">Sil</TableCell>
+              <TableCell align="center">Başlık</TableCell>
+              <TableCell align="center">Afiş</TableCell>
+              <TableCell align="center">Logo</TableCell>
+              <TableCell align="center">Tarih</TableCell>
+              <TableCell align="center">Düzenle</TableCell>
+              <TableCell align="center">Sil</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item: any) => (
               <TableRow
                 key={item.id} // ID kullanıldı
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{'&:last-child td, &:last-child th': {border: 0}}}
               >
                 <TableCell component="th" scope="row">
                   {item.title}
                 </TableCell>
-                <TableCell align="right">
-                  <img src={item.image} alt='' width="100" />
-                </TableCell>
-                <TableCell align="right">{/* Burada diğer özellikler eklenebilir, ancak bu veriler items dizisinde mevcut değil */}</TableCell>
-                <TableCell align="right">{getDate(item.date)}</TableCell>
-                <TableCell align="right">
-                  <CustomBadge  color={item.color}></CustomBadge>
-                </TableCell>
 
+                <TableCell align="center">
+                  {
+                    item.image ? <img src={item.image} alt="" height={100} width={100}/> :
+                      <div className="alert alert-warning">Görsel Yok</div>
+                  }
 
-                <TableCell align="right">
-                  <EditIcon onClick={() => handleEditClick(item.id)} style={{ cursor: 'pointer' }} /> {/* Düzenleme için handleEditClick fonksiyonu çağrıldı */}
                 </TableCell>
-                <TableCell align="right">
-                  <DeleteIcon onClick={() => handleDeleteClick(item.id)} style={{ cursor: 'pointer' }} /> {/* Silme için handleDeleteClick fonksiyonu çağrıldı */}
+                <TableCell align="center">
+                  {
+                    item.logo ? <img src={item.logo} alt="" height={100} width={100}/> :
+                      <div className="alert alert-warning">Görsel Yok</div>
+                  }
+                </TableCell>
+                <TableCell align="center">{getDate(item.date)}</TableCell>
+                <TableCell align="center">
+                  <EditIcon onClick={() => handleEditClick(item.id)}
+                            style={{cursor: 'pointer'}}/> {/* Düzenleme için handleEditClick fonksiyonu çağrıldı */}
+                </TableCell>
+                <TableCell align="center">
+                  <DeleteIcon onClick={() => handleDeleteClick(item.id)}
+                              style={{cursor: 'pointer'}}/> {/* Silme için handleDeleteClick fonksiyonu çağrıldı */}
                 </TableCell>
               </TableRow>
             ))}
@@ -159,9 +176,10 @@ export default function Category() {
             Kullanıcıyı silmek istediğinize emin misiniz?
           </p>
           <Button onClick={handleModalClose}>Vazgeç</Button>
-          <Button onClick={handleModalClose}>Sil</Button>
+          <Button onClick={() => confirmDelete()}>Sil</Button>
         </Box>
       </Modal>
+
     </div>
   );
 }
