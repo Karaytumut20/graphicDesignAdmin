@@ -14,7 +14,9 @@ export default function ImageUploader() {
 
     for (let index = 0; index < files.length; index++) {
       body.append('file', files[index]);
+      console.log(files[index])
     }
+
 
     fetch("/api/upload", {
       method: "POST",
@@ -32,7 +34,7 @@ export default function ImageUploader() {
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="file" multiple onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} />
       <button type="submit">Submit</button>
     </form>
   );

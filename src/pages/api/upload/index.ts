@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IncomingForm, File } from "formidable";
 import fs from "fs";
+import { connectToDatabase } from "../../../@core/db";
 
 export const config = {
   api: {
@@ -14,37 +15,44 @@ export default function uploadFormFiles(
 ) {
   // @ts-ignore
   const form: any = new IncomingForm({
-    multiples: true,
+    multiples: false,
     keepExtensions: true,
     uploadDir: "public/images/afis", // Dosyaların kaydedileceği dizin
   });
 
-  form.parse(req, (err: any, fields: any, files: any) => {
+  form.parse(req, async (err: any, fields: any, files: any) => {
     if (err) {
       console.error("Error parsing form data:", err);
       return res.status(500).send("Error parsing form data");
     }
 
-    // Dosyaları işle
-    // @ts-ignore
-    const filePromises = Object.values(files).map((file: File) => {
-      // @ts-ignore
-      const { path, name } = file;
-      // Dosyanın yeni adı, kaydedileceği dizin ile birleştirilerek belirlenir
-      const newFilePath = `${form.uploadDir}/${name}`;
+
+    const { id } = fields; // İstekten ID'yi al
+
+
+    if (!files) {
+      return res.status(400).send("No file uploaded");
+    }
+
+
+    const { filepath, newFilename } = files.file[0]; // Dosya yolunu ve adını al
+
+    // Dosyanın yeni adı, kaydedileceği dizin ile birleştirilerek belirlenir
+
+    const newFilePath = `public/images/afis/${newFilename}`;
+
+    try {
+
       // Dosya taşınırken yeniden adlandırılıyor ve taşınıyor
-      fs.renameSync(path, newFilePath);
+      fs.renameSync(filepath, newFilePath);
 
-      return Promise.resolve();
-    });
+      const db = await connectToDatabase();
+      const [result]: any = await db.query('UPDATE category SET image = ? WHERE id = ?', [newFilePath.toString(), id]);
 
-    Promise.all(filePromises)
-      .then(() => {
-        res.status(200).send("Files uploaded successfully");
-      })
-      .catch((error) => {
-        console.error("Error uploading files:", error);
-        res.status(500).send("Error uploading files");
-      });
+      res.status(200).send("File uploaded and category updated successfully");
+    } catch (error) {
+      console.error("Error processing file:", error);
+      res.status(500).send("Error processing file");
+    }
   });
 }

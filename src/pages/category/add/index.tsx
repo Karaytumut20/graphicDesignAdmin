@@ -39,62 +39,58 @@ const Add: NextPage<Props> = ({ dirs }) => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState<any>();
   const [image, setImage] = useState<any>();
-  const [logo, setLogo] = useState<any>();
-  const [uploading, setUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [file, setFile] = useState<any>();
+
+  function handleFileChange(event:any) {
+    setFile(event.target.files);
+  }
 
   const handleDateChange = (newDate: any) => {
     setDate(newDate);
   };
 
 
-  const handleUpload = async () => {
-    setUploading(true);
-    try {
-      if (!selectedFile) return;
-      const formData = new FormData();
-      formData.append("logo", selectedFile);
-      const {data} = await axios.post("/api/image", formData);
-      console.log(data);
-    } catch (error: any) {
-      console.log(error.response?.data);
-    }
-    setUploading(false);
-  };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Post isteğini oluştur
     try {
 
-      if (!selectedFile) return;
-      const formData: FormData = new FormData();
-
-
-
-      formData.set("logo", selectedFile);
-      formData.set("title", title);
-      formData.set("date", date?.format('YYYY-MM-DD'));
-      formData.set("textColor", textColor);
-      formData.set("image", image); // Değiştirildi
-
+      const data = {
+        title: title,
+        date: date,
+        textColor: textColor
+      }
 
       // Axios ile post isteği gönde
-      const response = await axios.post('/api/category', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // FormData olduğunu belirtmek için gerekli
-        },
-      });
+      const response = await axios.post('/api/category', data);
+      console.log(response.data.id)
 
-      console.log('Post işlemi başarılı:', response.data);
+      if(response.status === 200 && response.data.id && file){
+        const body = new FormData();
+
+        body.append('file', file[0]);
+        body.append('id', response.data.id);
+
+        fetch("/api/upload", {
+          method: "POST",
+          body
+        })
+          .then(response => {
+            // Handle response
+            console.log("Upload successful:", response);
+          })
+          .catch(error => {
+            // Handle error
+            console.error("Upload failed:", error);
+          });
+      }
+
     } catch (error) {
       console.error('Post işlemi sırasında hata oluştu:', error);
     }
   };
-
-
-
 
 
   return (
@@ -109,35 +105,9 @@ const Add: NextPage<Props> = ({ dirs }) => {
         />
         <div className="max-w-4xl mx-auto p-20 space-y-6">
           <label>
-            <input
-              type="file"
-              hidden
-              onChange={({target}) => {
-                if (target.files) {
-                  const file = target.files[0];
-                  setSelectedImage(URL.createObjectURL(file));
-                  setSelectedFile(file);
-                }
-              }}
-            />
-            <div
-              className="w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer">
-              {selectedImage ? (
-                <img src={selectedImage} alt=""/>
-              ) : (
-                <span>Select Image</span>
-              )}
-            </div>
+            <input type="file" onChange={handleFileChange} />
           </label>
-          <div className="mt-20 flex flex-col space-y-3">
-            {dirs.map((item) => (
-              <Link key={item} href={"/images/" + item}>
-                <a className="text-blue-500 hover:underline">{item}</a>
-              </Link>
-            ))}
-          </div>
         </div>
-
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
