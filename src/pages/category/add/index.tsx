@@ -21,7 +21,6 @@ interface Props {
 }
 // @ts-ignore
 import {GetServerSideProps, NextPage} from "next";
-import {useRouter} from "next/router";
 
 
 const VisuallyHiddenInput = styled('input')({

@@ -1,58 +1,45 @@
+// pages/user/add.jsx
+
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import Alert from '@mui/material/Alert';
-import Select from '@mui/material/Select';
-import { styled } from '@mui/material/styles';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
-import AlertTitle from '@mui/material/AlertTitle';
-import IconButton from '@mui/material/IconButton';
-import CardContent from '@mui/material/CardContent';
-import FormControl from '@mui/material/FormControl';
-import Button from '@mui/material/Button';
-import CloseIcon from '@mui/icons-material/Close';
-//UMUTTTTTTTTTTTTTTT
-const ImgStyled = styled('img')(({ theme }) => ({
-  width: 120,
-  height: 120,
-  marginRight: theme.spacing(6.25),
-  borderRadius: theme.shape.borderRadius
-}));
+import { CardContent, Grid, TextField, Button } from '@mui/material';
+import axios from 'axios';
 
-const ButtonStyled = styled(Button)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
-    width: '100%',
-    textAlign: 'center'
-  }
-}));
-
-const ResetButtonStyled = styled(Button)(({ theme }) => ({
-  marginLeft: theme.spacing(4.5),
-  [theme.breakpoints.down('sm')]: {
-    width: '100%',
-    marginLeft: 0,
-    textAlign: 'center',
-    marginTop: theme.spacing(4)
-  }
-}));
-
-const Useradd = () => {
-  const [openAlert, setOpenAlert] = useState(true);
+const UserAdd = () => {
   const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
+  const [surname, setSurname] = useState('');
+  const [degree, setDegree] = useState('')
   const [phone, setPhone] = useState('');
-  const [site, setSite] = useState('');
+  const [website, setWebsite] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = {
+        name: name,
+        degree: degree,
+        surname: surname,
+        phone: phone,
+        website: website
+      };
+
+      const response = await axios.post('/api/person', data);
+      console.log(response.data);
+
+      setName('');
+      setTitle('');
+      setPhone('');
+      setSite('');
+    } catch (error) {
+      console.error('Error occurred during POST request:', error);
+      alert('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
+    }
+  };
 
   return (
     <CardContent>
-      <h1>Kullanıcı ekle</h1>
-      <form>
+      <h1>Kullanıcı Ekle</h1>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-
           <Grid item xs={12} sm={6}>
             <TextField fullWidth label='İsim Soyisim' value={name} onChange={(e) => setName(e.target.value)} />
           </Grid>
@@ -66,18 +53,17 @@ const Useradd = () => {
             <TextField fullWidth label='Site' value={site} onChange={(e) => setSite(e.target.value)} />
           </Grid>
 
-          {openAlert && (
-            <Grid item xs={12} sx={{ mb: 3 }}>
-             
-            </Grid>
-          )}
-
           <Grid item xs={12}>
-            <Button variant='contained' sx={{ marginRight: 3.5 }}>
-              Save Changes
+            <Button variant='contained' type='submit' sx={{ marginRight: 3.5 }}>
+              Kaydet
             </Button>
-            <Button type='reset' variant='outlined' color='secondary'>
-              Reset
+            <Button type='reset' variant='outlined' color='secondary' onClick={() => {
+              setName('');
+              setTitle('');
+              setPhone('');
+              setSite('');
+            }}>
+              Sıfırla
             </Button>
           </Grid>
         </Grid>
@@ -86,4 +72,4 @@ const Useradd = () => {
   );
 };
 
-export default Useradd;
+export default UserAdd;
