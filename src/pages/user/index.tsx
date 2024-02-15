@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRouter } from 'next/router'; // Next.js'in router'ını içe aktarın
+import { useRouter } from 'next/router';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,23 +13,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-//UMUTTTTTTTTTTTTTTT
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-) {
-  return { name, calories, fat, carbs };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24),
-  createData('Ice cream sandwich', 237, 9.0, 37),
-  createData('Eclair', 262, 16.0, 24),
-  createData('Cupcake', 305, 3.7, 67),
-  createData('Gingerbread', 356, 16.0, 49),
-];
+import axios from 'axios';
 
 const modalStyle = {
   position: 'absolute' as 'absolute',
@@ -46,59 +30,87 @@ const modalStyle = {
 };
 
 export default function Category() {
-  const router = useRouter(); // Next.js'in router'ını al
+  const router = useRouter();
   const [modalOpen, setModalOpen] = React.useState(false);
-  
+  const [data, setData] = React.useState([]);
+
   const handleModalOpen = () => {
     setModalOpen(true);
   };
-  
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/person');
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleModalClose = () => {
     setModalOpen(false);
   };
 
-  const handleDeleteClick = () => {
-    // Silme işlevi burada gerçekleştirilebilir
-    console.log('Delete clicked');
-    handleModalOpen(); // Modalı aç
+  const handleDeleteClick = (id) => {
+    console.log('Delete clicked for id:', id);
+    // Your delete logic here
+  };
+
+  const handleEditClick = (id) => {
+    router.push(`person/edit/${id}`);
   };
 
   const handleButtonClick = () => {
-    router.push('user/add'); // '/add' rotasına yönlendir
-  };
+    router.push('/user/add'); //gidilecek sayfa degısımı
+  }; 
 
   return (
     <div>
-      <h1>Kullanıcı Yönetimi</h1>
+      <h1>Kategori Yönetimi</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow>
-              <TableCell>Ad Soyad</TableCell>
-              <TableCell align="right">Ünvan</TableCell>
-              <TableCell align="right">Telefon</TableCell>
-              <TableCell align="right">Web Site</TableCell>
-              <TableCell align="right">Düzenle</TableCell>
-              <TableCell align="right">Sil</TableCell>
+          <TableRow>
+              <TableCell>Ad </TableCell>
+              <TableCell>Soyad</TableCell>
+              <TableCell align="center">Ünvan</TableCell>
+              <TableCell align="center">Telefon</TableCell>
+              <TableCell align="center">Web Site</TableCell>
+              <TableCell align="center">Düzenle</TableCell>
+              <TableCell align="center">Sil</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data.map((item) => (
               <TableRow
-                key={row.name}
+                key={item.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {item.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">
-                  <EditIcon onClick={() => console.log('Edit clicked')} style={{ cursor: 'pointer' }} />
+                <TableCell component="th" scope="row">
+                  {item.surname}
                 </TableCell>
-                <TableCell align="right">
-                  <DeleteIcon onClick={handleDeleteClick} style={{ cursor: 'pointer' }} />
+                <TableCell component="th" scope="row">
+                  {item.phone}
+                </TableCell>
+                <TableCell align="center">{item.website}</TableCell>
+                <TableCell align="center">
+                  <EditIcon
+                    onClick={() => handleEditClick(item.id)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                </TableCell>
+                <TableCell align="center">
+                  <DeleteIcon
+                    onClick={() => handleDeleteClick(item.id)}
+                    style={{ cursor: 'pointer' }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -106,12 +118,10 @@ export default function Category() {
         </Table>
       </TableContainer>
       <Stack spacing={2} direction="row">
-        {/* Butona tıklandığında handleButtonClick fonksiyonunu çağır */}
         <Button variant="contained" onClick={handleButtonClick}>
           Contained
         </Button>
       </Stack>
-      {/* Silme modalı */}
       <Modal
         open={modalOpen}
         onClose={handleModalClose}
@@ -124,7 +134,7 @@ export default function Category() {
             Kullanıcıyı silmek istediğinize emin misiniz?
           </p>
           <Button onClick={handleModalClose}>Vazgeç</Button>
-          <Button onClick={handleModalClose}>Sil</Button>
+          <Button onClick={() => handleDeleteClick()}>Sil</Button>
         </Box>
       </Modal>
     </div>

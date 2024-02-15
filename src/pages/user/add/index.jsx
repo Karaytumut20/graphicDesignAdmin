@@ -22,13 +22,14 @@ const UserAdd = () => {
         website: website
       };
 
-      const response = await axios.post('/api/person', data);
+      const response = await axios.post('http://localhost:3000/api/person', data);
       console.log(response.data);
 
       setName('');
-      setTitle('');
+      setSurname('');
       setPhone('');
-      setSite('');
+      setDegree('')
+      setWebsite('');
     } catch (error) {
       console.error('Error occurred during POST request:', error);
       alert('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
@@ -41,16 +42,19 @@ const UserAdd = () => {
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='İsim Soyisim' value={name} onChange={(e) => setName(e.target.value)} />
+            <TextField fullWidth label='İsim' value={name} onChange={(e) => setName(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Ünvan' value={title} onChange={(e) => setTitle(e.target.value)} />
+            <TextField fullWidth label='Soy isim' value={surname} onChange={(e) => setSurname(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField fullWidth label='Ünvan' value={degree} onChange={(e) => setDegree(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField fullWidth label='Telefon' value={phone} onChange={(e) => setPhone(e.target.value)} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Site' value={site} onChange={(e) => setSite(e.target.value)} />
+            <TextField fullWidth label='Site' value={website} onChange={(e) => setWebsite(e.target.value)} />
           </Grid>
 
           <Grid item xs={12}>

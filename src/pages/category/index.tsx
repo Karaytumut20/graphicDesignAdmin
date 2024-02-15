@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {useRouter} from 'next/router'; // Next.js'in router'ını içe aktarın
+import {useEffect, useState} from 'react'; // Next.js'in router'ını içe aktarın
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,7 +14,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-
+import { useRouter } from 'next/router'
 
 const createData = (
   name: string,
