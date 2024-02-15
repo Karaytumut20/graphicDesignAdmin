@@ -139,7 +139,9 @@ export default function Category() {
                 <TableCell align="center">
                   {
                     item.logo ? <img src={item.logo} alt="" height={100} width={100}/> :
-                      <div className="alert alert-warning">Görsel Yok</div>
+
+                        <button className={'btn btn-success'} onClick={() => router.push('/upload-logo/'+item.id)}>Logo Yükle</button>
+
                   }
                 </TableCell>
                 <TableCell align="center">{getDate(item.date)}</TableCell>

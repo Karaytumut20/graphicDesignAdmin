@@ -30,13 +30,7 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/user'
     },
-    {
-      title: 'Upload Image',
-      icon: AccountCogOutline,
-      path: '/upload-image'
-    },
-    
-    
+
   ]
 }
 

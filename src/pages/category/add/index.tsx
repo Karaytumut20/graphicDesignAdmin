@@ -39,7 +39,7 @@ const Add: NextPage<Props> = ({ dirs }) => {
   const [textColor, setTextColor] = useState("#aabbcc");
   const [title, setTitle] = useState('');
   const [date, setDate] = useState<any>();
-  const [file, setFile] = useState<any>();
+  const [file, setFile] = useState<any>(); //logo
 
   const {push} = useRouter();
   function handleFileChange(event:any) {
@@ -64,7 +64,6 @@ const Add: NextPage<Props> = ({ dirs }) => {
 
       // Axios ile post isteği gönde
       const response = await axios.post('/api/category', data);
-      console.log(response.data.id)
 
       if(response.status === 200 && response.data.id && file){
         const body = new FormData();
@@ -106,9 +105,8 @@ const Add: NextPage<Props> = ({ dirs }) => {
           onChange={(e) => setTitle(e.target.value)}
         />
         <div className="max-w-4xl mx-auto p-20 space-y-6">
-          <label>
-            <input type="file" onChange={handleFileChange} />
-          </label>
+          <label>Afiş </label>
+          <input type="file" onChange={handleFileChange} />
         </div>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>

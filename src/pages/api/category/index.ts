@@ -6,7 +6,7 @@ const handler: NextApiHandler = async (req: any, res: any) => {
   try {
     if (req.method === 'GET') {
       const db = await connectToDatabase();
-      const [categories] = await db.query('SELECT * FROM category');
+      const [categories]: any[] = await db.query('SELECT * FROM category');
       res.status(200).json(categories);
     } else if (req.method === 'POST') {
       const { title, textColor, date } = req.body;
