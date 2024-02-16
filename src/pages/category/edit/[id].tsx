@@ -3,17 +3,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { HexColorPicker } from "react-colorful";
 import Button from "@mui/material/Button";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const EditCategory = (props: { id: any }) => {
   const { id } = props;
   const router = useRouter();
   const [data, setData] = useState<any>({});
-  const [textColor, setTextColor] = useState("#aabbcc");
+  const [textColor, setTextColor] = useState("");
   const [title, setTitle] = useState('');
   const [date, setDate] = useState<any>();
   const [file, setFile] = useState<any>(); //logo
@@ -22,17 +20,12 @@ const EditCategory = (props: { id: any }) => {
     setFile(event.target.files);
   }
 
-  const handleDateChange = (newDate: any) => {
-    setDate(newDate);
-  };
-
   useEffect(() => {
     if (id) {
       const fetchData = async () => {
         const response = await axios.get(`/api/category/${id}`);
-        console.log(response.data[0].title);
         setData(response.data[0]);
-        setDate(formatDate(response.data[0].date));
+        setDate(formatDate(response.data[0].date)); // Use formatDate function here
         setTitle(response.data[0].title);
         setTextColor(response.data[0].font_color);
       };
@@ -53,8 +46,7 @@ const EditCategory = (props: { id: any }) => {
 
       // Axios ile post isteği gönde
       const response = await axios.put("/api/category/"+id, data);
-      console.log(response)
-      return
+      console.log(response);
 
       if (response.status === 200 && response.data.id && file) {
         const body = new FormData();
@@ -86,9 +78,9 @@ const EditCategory = (props: { id: any }) => {
     let month = (1 + date.getMonth()).toString().padStart(2, '0');
     let day = date.getDate().toString().padStart(2, '0');
 
-
-    return `${day}.${month}.${year}`; // Saat ve zaman dilimi eklemek isterseniz: ${hour}:${minute}
+    return `${year}-${month}-${day}`;
   }
+
   return data && (
     <form onSubmit={handleSubmit}>
       <Stack spacing={2} direction="column">
@@ -100,12 +92,34 @@ const EditCategory = (props: { id: any }) => {
           onChange={(e) => setTitle(e.target.value)}
         />
         <div className="max-w-4xl mx-auto p-20 space-y-6">
-          <label>Afiş </label>
-          <input type="file" onChange={handleFileChange} />
-
+          <label htmlFor="file-upload">
+            <input
+              style={{ display: 'none' }}
+              id="file-upload"
+              name="file-upload"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <Button
+              variant="outlined"
+              component="span"
+              startIcon={<CloudUploadIcon />}
+            >
+              Afiş Yükle
+            </Button>
+          </label>
         </div>
 
-        <input type="date" value={date} onChange={handleDateChange}/>
+        {date && (
+          <TextField
+            className="mt-3"
+            label="Tarih"
+            type="date"
+            variant="outlined"
+            value={date} // Display date as text
+            onChange={(e) => setDate(e.target.value)} // Handle manual date input
+          />
+        )}
 
         <div style={{ display: "flex", width: "100%" }}>
           <HexColorPicker
@@ -118,7 +132,7 @@ const EditCategory = (props: { id: any }) => {
         {data && data.image && (
           <img src={`${data.image}`} alt="Afiş" height={400} width={300}/>
         )}
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" fullWidth>
           Gönder
         </Button>
       </Stack>
@@ -135,4 +149,5 @@ export const getServerSideProps = async (context: any) => {
     },
   };
 };
+
 export default EditCategory;

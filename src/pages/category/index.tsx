@@ -160,9 +160,15 @@ export default function Category() {
       </TableContainer>
       <Stack spacing={2} direction="row">
         {/* Butona tıklandığında handleButtonClick fonksiyonunu çağır */}
-        <Button variant="contained" onClick={handleButtonClick}>
-          Contained
-        </Button>
+        <Button
+  className='mt-4'
+  variant="contained"
+  onClick={handleButtonClick}
+  sx={{ width: "100%" }}
+>
+  Contained
+</Button>
+
       </Stack>
       {/* Silme modalı */}
       <Modal
