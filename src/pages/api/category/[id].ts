@@ -13,8 +13,8 @@ const handler: NextApiHandler = async (req: any, res: any) => {
     }
     else if (req.method === 'PUT') {
       const db = await connectToDatabase();
-      const {title, logo, image, font_color, date} = req.body;
-      const [categories] = await db.query('UPDATE category SET title=?, logo=?, image=?, font_color=?, date=? WHERE id=?', [title, logo, image, font_color, date, id]);
+      const {title, font_color, date} = req.body;
+      const [categories] = await db.query('UPDATE category SET title=?, font_color=?, date=? WHERE id=?', [title, font_color, date, id]);
       res.status(200).json(categories);
     } else if (req.method === 'DELETE') {
       const db = await connectToDatabase();
@@ -29,13 +29,17 @@ const handler: NextApiHandler = async (req: any, res: any) => {
       }
 
       // Kategori bulunduysa, resim dosyalarını sil
-      const categoryImagePath = `public${category[0].logo}`;
+      const categoryLogoPath = `public${category[0].logo}`;
       const categoryPosterPath = `public${category[0].image}`;
 
       try {
         // Resim dosyalarını sil
-        await fs.promises.unlink(categoryImagePath);
-        await fs.promises.unlink(categoryPosterPath);
+        if(category[0].logo && fs.existsSync(categoryLogoPath)) {
+          await fs.promises.unlink(categoryLogoPath);
+        }
+        if(category[0].image && fs.existsSync(categoryPosterPath)) {
+          await fs.promises.unlink(categoryPosterPath);
+        }
       } catch (error) {
         // Hata durumunda uygun bir yanıt dön
         console.error("Resim dosyalarını silme hatası:", error);

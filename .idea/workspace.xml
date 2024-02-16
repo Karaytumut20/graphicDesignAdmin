@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2a9594ce-46cb-4ba0-a432-11db7a01212f" name="Changes" comment="update" />
+    <list default="true" id="2a9594ce-46cb-4ba0-a432-11db7a01212f" name="Changes" comment="update">
+      <change afterPath="$PROJECT_DIR$/src/pages/sms-management/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/navigation/vertical/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/vertical/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/category/[id].ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/category/[id].ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/upload/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/upload/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/category/add/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/category/add/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/category/edit/[id].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/category/edit/[id].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/Table.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,25 +34,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/alicebeci/Desktop/graphic-design-admin/src/pages/api",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "/Users/alicebeci/Desktop/graphic-design-admin/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/alicebeci/Desktop/graphic-design-admin/src/pages/api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/alicebeci/Desktop/graphic-design-admin/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages/api" />
@@ -63,6 +72,8 @@
       <workItem from="1707195368351" duration="846000" />
       <workItem from="1707229037427" duration="1434000" />
       <workItem from="1707303776014" duration="3215000" />
+      <workItem from="1708106910665" duration="1742000" />
+      <workItem from="1708119583267" duration="2415000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -88,7 +99,23 @@
       <option name="project" value="LOCAL" />
       <updated>1708036112925</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update">
+      <option name="closed" value="true" />
+      <created>1708107035658</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1708107035658</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update">
+      <option name="closed" value="true" />
+      <created>1708107778270</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708107778271</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

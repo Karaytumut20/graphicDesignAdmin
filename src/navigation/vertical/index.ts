@@ -30,6 +30,16 @@ const navigation = (): VerticalNavItemsType => {
       icon: AccountCogOutline,
       path: '/user'
     },
+    {
+      title: 'Sms Yönetimi',
+      icon: AccountCogOutline,
+      path: '/sms-management'
+    },
+    {
+      title: 'Ayarlar',
+      icon: AccountCogOutline,
+      path: '/settings'
+    },
 
   ]
 }

@@ -38,17 +38,19 @@ const EditCategory = (props: { id: any }) => {
     e.preventDefault();
     // Post isteğini oluştur
     try {
-      const data = {
+      const formBody = {
         title: title,
         date: date,
-        textColor: textColor,
+        font_color: textColor,
       };
 
       // Axios ile post isteği gönde
-      const response = await axios.put("/api/category/"+id, data);
-      console.log(response);
 
-      if (response.status === 200 && response.data.id && file) {
+      const response = await axios.put("/api/category/"+id, formBody);
+
+
+      if (response.status === 200 && id && file) {
+
         const body = new FormData();
 
         body.append("file", file[0]);

@@ -21,6 +21,7 @@ interface Props {
 }
 // @ts-ignore
 import {GetServerSideProps, NextPage} from "next";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 
 const VisuallyHiddenInput = styled('input')({
@@ -83,9 +84,8 @@ const Add: NextPage<Props> = ({ dirs }) => {
             // Handle error
             console.error("Upload failed:", error);
           });
-
-
-
+      }else if(response.status === 200){
+        push('/category');
       }
 
     } catch (error) {
@@ -104,9 +104,24 @@ const Add: NextPage<Props> = ({ dirs }) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+
         <div className="max-w-4xl mx-auto p-20 space-y-6">
-          <label>Afiş </label>
-          <input type="file" onChange={handleFileChange} />
+          <label htmlFor="file-upload">
+            <input
+              style={{ display: 'none' }}
+              id="file-upload"
+              name="file"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <Button
+              variant="outlined"
+              component="span"
+              startIcon={<CloudUploadIcon />}
+            >
+              Afiş Yükle
+            </Button>
+          </label>
         </div>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
