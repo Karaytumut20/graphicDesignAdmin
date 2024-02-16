@@ -32,7 +32,7 @@ const EditCategory = (props: { id: any }) => {
         const response = await axios.get(`/api/category/${id}`);
         console.log(response.data[0].title);
         setData(response.data[0]);
-        setDate(response.data[0].date);
+        setDate(formatDate(response.data[0].date));
         setTitle(response.data[0].title);
         setTextColor(response.data[0].font_color);
       };
@@ -52,13 +52,15 @@ const EditCategory = (props: { id: any }) => {
       };
 
       // Axios ile post isteği gönde
-      const response = await axios.post("/api/category", data);
+      const response = await axios.put("/api/category/"+id, data);
+      console.log(response)
+      return
 
       if (response.status === 200 && response.data.id && file) {
         const body = new FormData();
 
         body.append("file", file[0]);
-        body.append("id", response.data.id);
+        body.append("id", id);
 
         fetch("/api/upload", {
           method: "POST",
@@ -78,21 +80,15 @@ const EditCategory = (props: { id: any }) => {
     }
   };
 
-  const formatDate = (dateString: any) => {
+  function formatDate(dateString: any) {
     const date = new Date(dateString);
-
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
     const year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
 
-    // Gün ve ay için tek haneli sayıların önüne 0 ekleyelim
-    const formattedDay = day < 10 ? '0' + day : day;
-    const formattedMonth = month < 10 ? '0' + month : month;
 
-    // DD.MM.YYYY formatında tarihi döndürelim
-    return `${formattedDay}.${formattedMonth}.${year}`;
-  };
-
+    return `${day}.${month}.${year}`; // Saat ve zaman dilimi eklemek isterseniz: ${hour}:${minute}
+  }
   return data && (
     <form onSubmit={handleSubmit}>
       <Stack spacing={2} direction="column">
@@ -109,7 +105,7 @@ const EditCategory = (props: { id: any }) => {
 
         </div>
 
-        <input type="date" value={formatDate(date)} onChange={handleDateChange}/>
+        <input type="date" value={date} onChange={handleDateChange}/>
 
         <div style={{ display: "flex", width: "100%" }}>
           <HexColorPicker
