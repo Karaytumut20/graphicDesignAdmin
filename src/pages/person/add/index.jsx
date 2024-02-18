@@ -1,8 +1,7 @@
-// pages/user/add.jsx
-
 import React, { useState } from 'react';
 import { CardContent, Grid, TextField, Button } from '@mui/material';
-import axios from 'axios';
+import axios from 'axios';  
+import { useRouter } from 'next/router';
 
 const UserAdd = () => {
   const [name, setName] = useState('');
@@ -10,6 +9,7 @@ const UserAdd = () => {
   const [degree, setDegree] = useState('')
   const [phone, setPhone] = useState('');
   const [website, setWebsite] = useState('');
+  const router = useRouter(); // useRouter hook'unu kullanarak router nesnesini alıyoruz
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +24,10 @@ const UserAdd = () => {
 
       const response = await axios.post('http://localhost:3000/api/person', data);
       console.log(response.data);
+
+      if (response.status === 200) {
+        router.push("/person"); 
+      }
 
       setName('');
       setSurname('');

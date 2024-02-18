@@ -28,7 +28,7 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: 'Kullanıcı Yönetimi',
       icon: AccountCogOutline,
-      path: '/user'
+      path: '/person'
     },
     {
       title: 'Sms Yönetimi',

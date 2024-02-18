@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,22 +24,23 @@ const modalStyle = {
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
-  boxShadow: 24,
+  boxShadow: '24px',
   pt: 2,
   px: 4,
   pb: 3,
 };
 
-export default function Category() {
+export default function Person() {
   const router = useRouter();
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const [data, setData] = React.useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+  const [data, setData] = useState([]);
 
   const handleModalOpen = () => {
     setModalOpen(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/api/person');
@@ -55,62 +57,59 @@ export default function Category() {
     setModalOpen(false);
   };
 
-  const handleDeleteClick = (id) => {
-    console.log('Delete clicked for id:', id);
-    // Your delete logic here
+  const handleDeleteClick = async (id: number) => {
+    try {
+      await axios.delete(`/api/person/${id}`);
+      const newData = data.filter((item: any) => item.id !== id);
+      setData(newData);
+      setModalOpen(false);
+    } catch (error) {
+      console.error('Error deleting person:', error);
+    }
   };
 
-  const handleEditClick = (id) => {
-    router.push(`person/edit/${id}`);
+  const handleEditClick = (id: number) => {
+    router.push(`/person/edit/${id}`);
   };
 
   const handleButtonClick = () => {
-    router.push('/user/add'); //gidilecek sayfa degısımı
-  }; 
+    router.push('/person/add');
+  };
+
+  const handleDeleteIconClick = (id: number) => {
+    setDeleteItemId(id);
+    handleModalOpen();
+  };
 
   return (
     <div>
-      <h1>Kategori Yönetimi</h1>
+      <h1>Kullanıcı Yönetimi</h1>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-          <TableRow>
-              <TableCell>Ad </TableCell>
-              <TableCell>Soyad</TableCell>
+            <TableRow>
+              <TableCell align="center">Ad</TableCell>
+              <TableCell align="center">Soyad</TableCell>
               <TableCell align="center">Ünvan</TableCell>
               <TableCell align="center">Telefon</TableCell>
-              <TableCell align="center">Web Site</TableCell>
+              <TableCell align="center">Web Sitesi</TableCell>
               <TableCell align="center">Düzenle</TableCell>
               <TableCell align="center">Sil</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((item) => (
-              <TableRow
-                key={item.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {item.name}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {item.surname}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {item.phone}
-                </TableCell>
+              <TableRow key={item.id}>
+                <TableCell align="center">{item.name}</TableCell>
+                <TableCell align="center">{item.surname}</TableCell>
+                <TableCell align="center">{item.degree}</TableCell>
+                <TableCell align="center">{item.phone}</TableCell>
                 <TableCell align="center">{item.website}</TableCell>
                 <TableCell align="center">
-                  <EditIcon
-                    onClick={() => handleEditClick(item.id)}
-                    style={{ cursor: 'pointer' }}
-                  />
+                  <EditIcon onClick={() => handleEditClick(item.id)} style={{ cursor: 'pointer' }} />
                 </TableCell>
                 <TableCell align="center">
-                  <DeleteIcon
-                    onClick={() => handleDeleteClick(item.id)}
-                    style={{ cursor: 'pointer' }}
-                  />
+                  <DeleteIcon onClick={() => handleDeleteIconClick(item.id)} style={{ cursor: 'pointer' }} />
                 </TableCell>
               </TableRow>
             ))}
@@ -118,8 +117,8 @@ export default function Category() {
         </Table>
       </TableContainer>
       <Stack spacing={2} direction="row">
-        <Button variant="contained" onClick={handleButtonClick}>
-          Contained
+        <Button className='mt-4' sx={{ width: "100%" }} variant="contained" onClick={handleButtonClick}>
+          Ekle
         </Button>
       </Stack>
       <Modal
@@ -133,8 +132,10 @@ export default function Category() {
           <p id="delete-modal-description">
             Kullanıcıyı silmek istediğinize emin misiniz?
           </p>
-          <Button onClick={handleModalClose}>Vazgeç</Button>
-          <Button onClick={() => handleDeleteClick()}>Sil</Button>
+          <Stack direction="row" spacing={2}>
+            <Button onClick={handleModalClose}>Vazgeç</Button>
+            <Button onClick={() => handleDeleteClick(deleteItemId)}>Sil</Button>
+          </Stack>
         </Box>
       </Modal>
     </div>
