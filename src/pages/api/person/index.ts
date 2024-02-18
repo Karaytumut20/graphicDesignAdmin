@@ -5,7 +5,7 @@ const handler = async (req: any, res: any) => {
   try {
     if (req.method === 'GET') {
       const db = await connectToDatabase();
-      const [persons] = await db.query('SELECT * FROM person');
+      const [persons] = await db.query('SELECT * FROM person')
       res.status(200).json(persons);
     } else if (req.method === 'POST') {
       const {name,surname,degree, phone, website} = req.body;

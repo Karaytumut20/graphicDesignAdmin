@@ -33,7 +33,7 @@ const modalStyle = {
 export default function Person() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  const [deleteItemId, setDeleteItemId] = useState(null);
+  const [deleteItemId, setDeleteItemId] = useState<any>('');
   const [data, setData] = useState([]);
 
   const handleModalOpen = () => {
@@ -76,7 +76,7 @@ export default function Person() {
     router.push('/person/add');
   };
 
-  const handleDeleteIconClick = (id: number) => {
+  const handleDeleteIconClick = (id: any) => {
     setDeleteItemId(id);
     handleModalOpen();
   };
@@ -98,7 +98,7 @@ export default function Person() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
+            {data.map((item: any) => (
               <TableRow key={item.id}>
                 <TableCell align="center">{item.name}</TableCell>
                 <TableCell align="center">{item.surname}</TableCell>

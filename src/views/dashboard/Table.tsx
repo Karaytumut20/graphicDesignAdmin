@@ -24,11 +24,6 @@ interface RowType {
   website: string
 }
 
-interface StatusObj {
-  [key: string]: {
-    color: ThemeColor
-  }
-}
 
 const rows: RowType[] = []
 
