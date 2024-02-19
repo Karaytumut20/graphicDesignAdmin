@@ -1,16 +1,16 @@
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-
+import React, { useEffect, useState } from "react";
 
 const testData = {
-  website: "Test Title",
-  phone: "65462476452",
-  degree: "Test Degree",
-  name: "Test name",
-}
+  website: "www.test.com",
+  phone: "05462476452",
+  degree: "Birleşmiş milletler başkanı",
+  name: "umut karaytu",
+};
+
 const DetailsCategory = (props: { id: any }) => {
-  const {id} = props;
+  const { id } = props;
   const router = useRouter();
   const [data, setData] = useState<any>({});
 
@@ -29,39 +29,91 @@ const DetailsCategory = (props: { id: any }) => {
     }
   }, [id]);
 
-  function formatDate(dateString: any) {
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      return dateString; // Geçersiz bir tarihse orijinal dizgiyi döndür
-    }
-    const year = date.getFullYear();
-    const month = (1 + date.getMonth()).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
   return (
-    <div style={{ position: "relative" }}>
-      <img src={data.image} alt="Afiş" height={850} width={650} style={{ display: "block", margin: "0 auto" }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 100 }}>
-        {data.logo && (
-          <img src={data.logo} alt="Logo" height={140} width={140} />
-        )}
-        <div>
-          <p>{testData.name}</p>
-          <p>{testData.degree}</p>
+    <div style={{ position: "relative", textAlign: "center" }}>
+      {data.image && (
+        <div style={{ position: "relative", display: "inline-block" }}>
+          <img
+            src={data.image}
+            alt="Afiş"
+            height={850}
+            width={650}
+            style={{ display: "block", margin: "0 auto" }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              zIndex: 100,
+              padding: "10px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+
+              <div style={{ textAlign: "left" }}>
+                <p style={{ margin: "0", color: "white" }}>
+                  {testData.website}
+                </p>
+                <p style={{ margin: "0", color: "white" }}>
+                  {testData.phone}
+                </p>
+                
+              </div>
+              
+              
+
+             
+              <svg
+                width="50%"
+                height="2"
+                style={{ flex: "1", minWidth: "50px", marginLeft: "10px" }}
+              >
+                <line
+                  x1="0"
+                  y1="1"
+                  x2="100%"
+                  y2="1"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </svg>
+              <div style={{ color: "white", textAlign: "right" }}>
+                <p style={{ margin: "0" }}>{testData.degree}</p>
+                <p style={{ margin: "0" }}>{testData.name}</p>
+              </div>
+              
+              <svg
+                width="10%"
+                height="2"
+                style={{ flex: "1", minWidth: "50px", marginLeft: "10px" }}
+              >
+                <line
+                  x1="0"
+                  y1="1"
+                  x2="10%"
+                  y2="1"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
-      </div>
-      <div style={{ position: "absolute", bottom: "20px", textAlign: "center", width: "100%", zIndex: 100 }}>
-        <p>Website: {testData.website}</p>
-        <p>Phone: {testData.phone}</p>
-      </div>
+      )}
     </div>
   );
 };
 
 export const getServerSideProps = async (context: any) => {
-  const {id} = context.query;
+  const { id } = context.query;
 
   return {
     props: {
