@@ -1,9 +1,16 @@
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
+
+const testData = {
+  website: "Test Title",
+  phone: "65462476452",
+  degree: "Test Degree",
+  name: "Test name",
+}
 const DetailsCategory = (props: { id: any }) => {
-  const { id } = props;
+  const {id} = props;
   const router = useRouter();
   const [data, setData] = useState<any>({});
 
@@ -34,37 +41,27 @@ const DetailsCategory = (props: { id: any }) => {
   }
 
   return (
-    <div>
-      <div style={{textAlign: "center" }} className="container">
-        <div className="titleDateContainer">
-          <span>{data?.title}</span>
-          <span>{formatDate(data?.date)}</span>
-        </div>
-        {data && data.image && (
-          <div className="imageContainer" style={{ position: "relative", textAlign: "center" }}>
-            <img src={data.image} alt="Afiş" height={850} width={650} style={{ display: "block", margin: "0 auto" }} />
-            {data && data.logo && (
-              <img
-                src={data.logo}
-                alt="Logo"
-                height={140}
-                width={140}
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "25%",
-                }}
-              />
-            )}
-          </div>
+    <div style={{ position: "relative" }}>
+      <img src={data.image} alt="Afiş" height={850} width={650} style={{ display: "block", margin: "0 auto" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 100 }}>
+        {data.logo && (
+          <img src={data.logo} alt="Logo" height={140} width={140} />
         )}
+        <div>
+          <p>{testData.name}</p>
+          <p>{testData.degree}</p>
+        </div>
+      </div>
+      <div style={{ position: "absolute", bottom: "20px", textAlign: "center", width: "100%", zIndex: 100 }}>
+        <p>Website: {testData.website}</p>
+        <p>Phone: {testData.phone}</p>
       </div>
     </div>
   );
 };
 
 export const getServerSideProps = async (context: any) => {
-  const { id } = context.query;
+  const {id} = context.query;
 
   return {
     props: {
