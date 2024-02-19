@@ -1,0 +1,33 @@
+.container {
+  position: relative; /* Resmin içindeki logonun mutlaka konumlandırılacağı ana konteyneri gösterebiliriz */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleDateContainer {
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.date {
+  margin-left: 100px;
+}
+
+.image-container {
+  position: relative; /* Resmin içindeki logonun mutlaka konumlandırılacağı ana konteyneri gösterebiliriz */
+  width: 650px; /* Resim container'ının genişliği */
+  height: 850px; /* Resim container'ının yüksekliği */
+}
+
+.logo-container {
+  position: absolute; /* Logo, resmin içinde mutlaka pozisyonlandırılmalıdır */
+  top: 10px; /* Logo, resmin üst kısmına 10px mesafede olacak şekilde ayarlanır */
+  left: 10px; /* Logo, resmin sol kısmına 10px mesafede olacak şekilde ayarlanır */
+  width: 150px;
+  height: 150px;
+}
