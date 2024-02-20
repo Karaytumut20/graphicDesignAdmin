@@ -1,0 +1,68 @@
+/* styles/DetailsCategory.module.css */
+
+.container {
+    position: relative;
+    text-align: center;
+  }
+  
+  .imageContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .image {
+    width: 600px;
+    height: 750px;
+  }
+  
+  .textContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    padding: 10px; /* Opsiyonel: Yazıların çevresine boşluk ekleyebilirsiniz */
+    box-sizing: border-box;
+    color: white; /* Yazı rengi */
+  }
+  
+  .text {
+    margin-right: 10px;
+  }
+  .right {
+    right: 60px;
+    position: absolute;
+    bottom: 5px;
+    align-items: center;
+
+  }
+  
+  .right1 {
+    right: 60px;
+    position: absolute;
+    bottom: 30px;
+    align-items: center;
+
+  }
+
+  .center{
+    position: absolute;
+    bottom: 0px;
+    right: 200px;
+  }
+  .center1{
+    position: absolute;
+    bottom: 0px;
+    left: 180px;
+  }
+  .cizgi{
+    position: absolute;
+top: 95px;
+right: 160px;
+  }
+  .cizgi1{
+    position: absolute;
+top: 97px;
+right: -245px;
+  }

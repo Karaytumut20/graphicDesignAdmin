@@ -1,18 +1,22 @@
+// pages/category/details/detailsCategory.tsx
+
 import { useRouter } from "next/router";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-const testData = {
-  website: "Test Title",
-  phone: "65462476452",
-  degree: "Test Degree",
-  name: "Test name",
-};
+import styles from "./detailsCategory.module.css";
 
 const DetailsCategory = (props: { id: any }) => {
   const { id } = props;
   const router = useRouter();
   const [data, setData] = useState<any>({});
+
+  // Statik veriler
+  const staticData = {
+    website: "wwww.com",
+    phone: "65462476452",
+    degree: "Test Degree",
+    name: "Test name",
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,18 +34,38 @@ const DetailsCategory = (props: { id: any }) => {
   }, [id]);
 
   return (
-    <div style={{ position: "relative", textAlign: "center" }}>
+    <div className={styles.container}>
       {data.image && (
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <img src={data.image} alt="Afiş" height={850} width={650} style={{ display: "block", margin: "0 auto" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 100, padding: "10px", display: "flex", alignItems: "center", justifyContent:'space-between' }}>
+        <div className={styles.imageContainer}>
+          <img className={styles.image} src={data.image} alt="Afiş" />
+          <div className={styles.textContainer}>
             {data.logo && (
-              <img src={data.logo} alt="Logo" height={120} width={120} />
-            )}
+              <div style={{ marginRight: 10 }}>
+                <img src={data.logo} alt="Logo" height={120} width={120} />
+              </div>
+            )} 
             <div>
-              <h4>{testData.website}</h4>
-              <p style={{color:data.font_color}}>{testData.phone}</p>
+
+            <div  style={{ display: "flex", flexDirection: "row" }}>
+              <p className={styles.center}> {staticData.website}</p>
+              <p className={styles.center1}> {staticData.phone}</p>
             </div>
+            </div>
+            
+            <div >
+              <div>
+              <svg className={styles.cizgi} width="50%" height="2">
+                <line x1="0" y1="3" x2="100%" y2="0" stroke="white" strokeWidth="2" />
+              </svg>
+                <p className={styles.right}> {staticData.degree}</p>
+                <svg className={styles.cizgi1} width="50%" height="2">
+                <line x1="0" y1="0" x2="100%" y2="20" stroke="white" strokeWidth="2" />
+              </svg>
+                <p className={styles.right1}> {staticData.name}</p>
+              </div>
+              
+            </div>
+            
           </div>
         </div>
       )}
