@@ -24,6 +24,7 @@ const handler = async (req: any, res: any) => {
 
       try {
         await db.query('DELETE FROM person WHERE id=?', [id]);
+        await db.query('DELETE FROM category_person WHERE person_id=?', [id])
         res.status(200).json({ message: "person deleted successfully" });
       } catch (error) {
         console.error("Kullanıcıyı veritabanından silme hatası:", error);

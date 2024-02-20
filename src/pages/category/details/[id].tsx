@@ -34,10 +34,14 @@ const DetailsCategory = (props: { id: any }) => {
       {data.image && (
         <div style={{ position: "relative", display: "inline-block" }}>
           <img src={data.image} alt="Afiş" height={850} width={650} style={{ display: "block", margin: "0 auto" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 100, padding: "10px", display: "flex", alignItems: "center" }}>
+          <div style={{ position: "absolute", bottom: 0, left: 0, zIndex: 100, padding: "10px", display: "flex", alignItems: "center", justifyContent:'space-between' }}>
             {data.logo && (
               <img src={data.logo} alt="Logo" height={120} width={120} />
-            )}      
+            )}
+            <div>
+              <h4>{testData.website}</h4>
+              <p style={{color:data.font_color}}>{testData.phone}</p>
+            </div>
           </div>
         </div>
       )}

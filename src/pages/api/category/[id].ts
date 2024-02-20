@@ -50,6 +50,7 @@ const handler: NextApiHandler = async (req: any, res: any) => {
       // Resim dosyaları başarıyla silindi, şimdi kategoriyi veritabanından sil
       try {
         await db.query('DELETE FROM category WHERE id=?', [id]);
+        await db.query('DELETE FROM category_person WHERE category_id=?', [id])
         res.status(200).json({message: "Category deleted successfully"});
       } catch (error) {
         console.error("Kategoriyi veritabanından silme hatası:", error);

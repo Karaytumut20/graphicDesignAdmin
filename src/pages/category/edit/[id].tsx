@@ -68,7 +68,10 @@ const EditCategory = (props: { id: any }) => {
             // Handle error
             console.error("Upload failed:", error);
           });
+
       }
+      router.push("/category");
+
     } catch (error) {
       console.error("Post işlemi sırasında hata oluştu:", error);
     }
