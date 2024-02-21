@@ -1,6 +1,10 @@
 const path = require('path')
-
-module.exports = {
+const withTM = require('next-transpile-modules')([
+  '@pqina/pintura',
+  '@pqina/react-pintura',
+]);
+module.exports = withTM({
+  swcMinify: false,
   trailingSlash: true,
   reactStrictMode: false,
   experimental: {
@@ -15,4 +19,4 @@ module.exports = {
 
     return config
   }
-}
+});
