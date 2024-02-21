@@ -61,6 +61,8 @@
     "express": "^4.18.2",
     "formidable": "^3.5.1",
     "mdi-material-ui": "^7.1.0",
+    "@pqina/pintura": "^8.73.1",
+    "@pqina/react-pintura": "^9.x",
     "mysql2": "^3.9.1",
     "next": "12.0.4",
     "nprogress": "^0.2.0",
