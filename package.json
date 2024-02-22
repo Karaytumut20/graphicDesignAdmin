@@ -53,6 +53,8 @@
     "@mui/material": "^5.15.7",
     "@mui/x-date-pickers": "^6.19.3",
     "@popperjs/core": "^2.11.2",
+    "@pqina/pintura": "^8.73.1",
+    "@pqina/react-pintura": "^9.x",
     "apexcharts-clevision": "3.28.5",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
@@ -60,9 +62,8 @@
     "dayjs": "^1.11.10",
     "express": "^4.18.2",
     "formidable": "^3.5.1",
+    "html2canvas": "^1.4.1",
     "mdi-material-ui": "^7.1.0",
-    "@pqina/pintura": "^8.73.1",
-    "@pqina/react-pintura": "^9.x",
     "mysql2": "^3.9.1",
     "next": "12.0.4",
     "nprogress": "^0.2.0",
@@ -72,8 +73,10 @@
     "react-datepicker": "^4.25.0",
     "react-dom": "17.0.2",
     "react-dropzone": "^14.2.3",
+    "react-is": "^18.2.0",
     "react-perfect-scrollbar": "^1.5.8",
-    "react-popper": "^2.2.5"
+    "react-popper": "^2.2.5",
+    "react-rnd": "^10.4.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
