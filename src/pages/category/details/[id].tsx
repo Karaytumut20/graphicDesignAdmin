@@ -3,15 +3,16 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./detailsCategory.module.css";
 import { Rnd } from 'react-rnd';
-import html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
+import Button from '@mui/material/Button';
 
-const DetailsCategory = (props: { id: any }) => {
+const DetailsCategory = (props) => {
   const { id } = props;
   const router = useRouter();
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState({});
   const [draggableText, setDraggableText] = useState('Merhaba Dünya!');
   const [rndData, setRndData] = useState({ x: 0, y: 0, width: 320, height: 200 });
-  const screenshotRef = useRef(null); // ekran görüntüsünü almak istediğiniz bölüm için yeni bir ref
+  const screenshotRef = useRef(null);
 
   // Statik veriler
   const staticData = {
@@ -36,11 +37,11 @@ const DetailsCategory = (props: { id: any }) => {
     }
   }, [id]);
 
-  const handleDragStop = (e: any, d: any) => {
+  const handleDragStop = (e, d) => {
     setRndData({ ...rndData, x: d.x, y: d.y });
   };
 
-  const handleResizeStop = (e: any, direction: any, ref: any, delta: any, position: any) => {
+  const handleResizeStop = (e, direction, ref, delta, position) => {
     setRndData({
       ...rndData,
       width: ref.style.width,
@@ -51,26 +52,32 @@ const DetailsCategory = (props: { id: any }) => {
 
   const handleDownloadContainer = async () => {
     const screenshotElement = screenshotRef.current;
-    const canvas = await html2canvas(screenshotElement, { 
-      width: screenshotElement.offsetWidth, 
-      height: screenshotElement.offsetHeight,
-      allowTaint: true,
-      useCORS: true
-    });
-    const imgURL = canvas.toDataURL("image/png");
-    const link = document.createElement('a');
-    link.href = imgURL;
-    link.download = 'screenshot.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (!screenshotElement) {
+      console.error('Screenshot element is not found');
+      return;
+    }
+
+    // Set the size of the screenshot element
+    screenshotElement.style.width = '600px';
+    screenshotElement.style.height = '750px';
+
+    htmlToImage.toPng(screenshotElement)
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image.png';
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch(function (error) {
+        console.error('Oops, something went wrong!', error);
+      });
   };
 
   return (
     <div className={styles.container}>
-      <div ref={screenshotRef}> {/* ekran görüntüsünü almak istediğiniz bölüm */}
+      <div className={styles.imageContainer} ref={screenshotRef}>
         {data.image && (
-          <div className={styles.imageContainer}>
+          <>
             <img className={styles.image} src={data.image} alt="Afiş" />
             <div className={styles.textContainer}>
               {data.logo && (
@@ -78,11 +85,9 @@ const DetailsCategory = (props: { id: any }) => {
                   <img src={data.logo} alt="Logo" height={120} width={120} />
                 </div>
               )}
-              <div>
-                <div  style={{ display: "flex", flexDirection: "row" }}>
-                  <p className={styles.center}> {staticData.website}</p>
-                  <p className={styles.center1}> {staticData.phone}</p>
-                </div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <p className={styles.center}> {staticData.website}</p>
+                <p className={styles.center1}> {staticData.phone}</p>
               </div>
               <div>
                 <div>
@@ -97,7 +102,7 @@ const DetailsCategory = (props: { id: any }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </>
         )}
         <div>
           <Rnd
@@ -110,12 +115,16 @@ const DetailsCategory = (props: { id: any }) => {
           </Rnd>
         </div>
       </div>
-      <button onClick={handleDownloadContainer}>Ekran Görüntüsünü İndir</button>
+      <div style={{ marginTop: '20px' }}>
+        <Button variant="contained" onClick={handleDownloadContainer}>
+          Ekran Görüntüsünü İndir
+        </Button>
+      </div>
     </div>
   );
 };
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context) => {
   const { id } = context.query;
 
   return {
