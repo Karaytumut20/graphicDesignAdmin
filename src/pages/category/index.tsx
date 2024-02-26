@@ -160,7 +160,7 @@ export default function Category() {
           onClick={handleButtonClick}
           sx={{ width: "100%" }}
         >
-          Contained
+          Ekle
         </Button>
       </Stack>
       {/* Silme modalı */}

@@ -10,7 +10,7 @@ const DetailsCategory = (props) => {
   const { id } = props;
   const router = useRouter();
   const [data, setData] = useState({});
-  const [draggableText, setDraggableText] = useState('Merhaba Dünya!');
+  const [draggableText, setDraggableText] = useState();
   const [rndData, setRndData] = useState({ x: 0, y: 0, width: 320, height: 200 });
   const screenshotRef = useRef(null);
 
